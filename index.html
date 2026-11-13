@@ -620,8 +620,7 @@
             if (name === "تاريخ" || duaa === "دعوة") return false;
             return true;
           });
-          currentData = filtered;
-          currentData = filtered.sort(() => Math.random() - 0.5);
+          currentData = filtered.sort((a, b) => a.rowIndex - b.rowIndex);
           renderReview();
         } else showToast("خطأ في التحميل");
       }
