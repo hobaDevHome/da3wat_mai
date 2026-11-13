@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دعواتي في الحج</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Playpen+Sans+Arabic:wght@400;600;700&family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #1a5f5a;
+        --primary-dark: #0e3b38;
+        --secondary: #d4af37;
+        --bg-light: #fefcf5;
+        --bg-surface: #ffffff;
+        --text-dark: #2c3e2f;
+        --border-color: #e2dccd;
+        --shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+        --radius: 20px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Cairo", sans-serif;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+      .page {
+        display: none;
+        min-height: 100vh;
+        padding: 32px 24px;
+      }
+      .page.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        animation: fadeIn 0.3s;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .kaaba-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: gentleFloat 4s infinite;
+      }
+      @keyframes gentleFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+      h1 {
+        font-family: "Amiri", serif;
+        font-size: 48px;
+        color: var(--primary);
+        margin-bottom: 20px;
+      }
+      .subtitle {
+        color: #5a6e5c;
+        margin-bottom: 40px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        box-shadow: var(--shadow);
+        font-family: "Cairo", sans-serif;
+        font-size: 16px;
+      }
+      .btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-dark)
+        );
+        color: white;
+      }
+      .btn-outline {
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+      }
+      .btn-success {
+        background: linear-gradient(135deg, #2d6a4f, #1b4d3e);
+        color: white;
+      }
+      .btn-sm {
+        padding: 8px 20px;
+        font-size: 14px;
+      }
+      .form-card {
+        background: var(--bg-surface);
+        border-radius: var(--radius);
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: var(--shadow);
+      }
+      .form-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 24px;
+      }
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 8px;
+      }
+      .field {
+        margin-bottom: 24px;
+      }
+      label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid var(--border-color);
+        border-radius: 16px;
+        font-family: inherit;
+        font-size: 15px;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 60px;
+      }
+      .duaa-row {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .duaa-row textarea {
+        flex: 1;
+      }
+      .btn-remove {
+        background: #fee2e2;
+        border: none;
+        border-radius: 12px;
+        width: 40px;
+        cursor: pointer;
+        color: #c0392b;
+      }
+      .btn-add-row {
+        width: 100%;
+        background: transparent;
+        border: 2px dashed var(--secondary);
+        border-radius: 16px;
+        padding: 10px;
+        margin-top: 8px;
+        cursor: pointer;
+        font-family: "Cairo", sans-serif;
+        font-size: 15px;
+        color: var(--primary);
+      }
+      .review-container {
+        max-width: 800px;
+        width: 100%;
+      }
+      .review-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+      .review-header h2 {
+        font-size: 24px;
+        color: var(--primary);
+      }
+      .stats-bar {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .stat-chip {
+        background: var(--bg-surface);
+        padding: 6px 18px;
+        border-radius: 40px;
+        box-shadow: var(--shadow);
+      }
+      .person-card {
+        background: var(--bg-surface);
+        border-radius: 24px;
+        margin-bottom: 24px;
+        overflow: hidden;
+      }
+      .person-header {
+        background: var(--primary);
+        color: white;
+        padding: 16px 24px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .duaa-list {
+        padding: 20px;
+      }
+      .duaa-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--bg-light);
+        margin-bottom: 12px;
+        padding: 12px 16px;
+        border-radius: 16px;
+        border-right: 4px solid var(--secondary);
+      }
+      .duaa-item.done {
+        opacity: 0.6;
+        background: #e8f0e8;
+      }
+      .duaa-item.done .duaa-text {
+        text-decoration: line-through;
+      }
+      .check-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: white;
+        border: 2px solid var(--secondary);
+        cursor: pointer;
+        font-size: 18px;
+        color: transparent;
+        flex-shrink: 0;
+      }
+      .check-btn.checked {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: white;
+      }
+      .back-btn {
+        background: none;
+        border: none;
+        color: var(--primary);
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        display: inline-flex;
+        gap: 8px;
+        font-family: "Cairo", sans-serif;
+      }
+      .toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--primary-dark);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        transition: 0.2s;
+        z-index: 999;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+      .loading-spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        vertical-align: middle;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+      }
+          /* ===== Sketch theme ===== */
+      :root{--primary:#1DAD97;--primary-dark:#0B6B5C;--secondary:#F4EDE0;--bg-light:#F4EDE0;--bg-surface:#FFFFFF;--text-dark:#111827;--border-color:#111827;--ink:#111827;--shadow:4px 4px 0 var(--ink);--radius:24px}
+      body,.btn,.btn-add-row,.back-btn,input,textarea{font-family:"Delicious Handrawn","Playpen Sans Arabic","Cairo",sans-serif;font-size:18px}
+      h1{font-family:inherit;font-weight:400;font-size:56px;color:var(--primary-dark)}
+      .subtitle{color:#374151}
+      .kaaba-icon{color:var(--primary-dark)}
+      .btn{border:2px solid var(--ink);box-shadow:var(--shadow);font-size:18px;transition:transform .1s,box-shadow .1s}
+      .btn:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+      .btn:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+      .btn-primary,.btn-success{background:var(--primary);color:var(--ink)}
+      .btn-outline{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+      .form-card,.person-card{border:2px dashed var(--ink);box-shadow:6px 6px 0 var(--ink)}
+      .form-title,.review-header h2{color:var(--primary-dark)}
+      input,textarea{border:2px solid var(--ink);background:#fff;color:var(--ink)}
+      :focus-visible{outline:3px solid var(--primary-dark);outline-offset:3px}
+      .btn-add-row{border:2px dashed var(--ink);color:var(--ink)}
+      .btn-remove{background:#fff;border:2px solid #DC2626;color:#DC2626}
+      .back-btn{color:var(--ink)}
+      .stat-chip{border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+      .person-header{background:var(--primary);color:var(--ink);border-bottom:2px dashed var(--ink)}
+      .duaa-item{background:var(--bg-light);border:2px solid var(--ink);border-right:6px solid var(--primary)}
+      .duaa-item.done{background:#E6F6F2;opacity:.75}
+      .check-btn{border:2px solid var(--ink)}
+      .check-btn.checked{background:var(--primary);border-color:var(--ink);color:var(--ink)}
+      .toast{background:var(--ink);border:2px solid var(--primary)}
+      .loading-spinner{border:2px solid rgba(17,24,39,.25);border-top-color:var(--ink)}
+
+      .avatar{width:140px;height:140px;border-radius:50%;object-fit:cover;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);background:var(--primary);margin-bottom:24px}
+    </style>
+  </head>
+  <body>
+    <div class="page active" id="page-home">
+      <img class="avatar" src="Images/profile.jpg" alt="الحاجة مي" />
+      <h1>دعوات الحاجة مي</h1>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          max-width: 320px;
+          width: 100%;
+        "
+      >
+        <button class="btn btn-primary" onclick="goTo('page-add')">
+          <i class="fas fa-feather-alt"></i> أضف دعواتك
+        </button>
+        <button class="btn btn-outline" onclick="goTo('page-password')">
+          <i class="fa-solid fa-kaaba"></i> استعرض الدعوات
+        </button>
+      </div>
+    </div>
+
+    <div class="page" id="page-add">
+      <div style="max-width: 600px; width: 100%">
+        <button class="back-btn" onclick="goTo('page-home')">
+          <i class="fas fa-arrow-right"></i> رجوع
+        </button>
+        <div class="form-card">
+          <div class="form-title">
+            <i class="fas fa-feather-alt"></i> أضف دعواتك
+          </div>
+          <div class="field">
+            <label>اسمك</label>
+            <input type="text" id="input-name" placeholder="مثال: أحمد" />
+          </div>
+          <div class="field">
+            <label>الدعوات</label>
+            <div id="duaa-rows">
+              <div class="duaa-row">
+                <textarea placeholder="اكتب دعوتك..."></textarea>
+                <button class="btn-remove" onclick="removeRow(this)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            <button class="btn-add-row" onclick="addRow()">
+              <i class="fas fa-plus"></i> أضف دعوة أخرى
+            </button>
+          </div>
+          <div class="form-actions">
+            <button
+              class="btn btn-outline"
+              id="cancelBtn"
+              onclick="goTo('page-home')"
+            >
+              إلغاء
+            </button>
+            <button
+              class="btn btn-success"
+              id="submitBtn"
+              onclick="submitDuaa()"
+            >
+              <i class="fas fa-save"></i> حفظ الدعوات
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-password">
+      <div style="max-width: 400px; width: 100%">
+        <button class="back-btn" onclick="goTo('page-home')">
+          <i class="fas fa-arrow-right"></i> رجوع
+        </button>
+        <div class="form-card">
+          <div class="form-title">
+            <i class="fas fa-lock"></i> الدخول للدعوات
+          </div>
+          <div class="field">
+            <label>كلمة السر</label>
+            <input
+              type="password"
+              id="input-password"
+              placeholder="كلمة السر"
+              onkeydown="if (event.key == 'Enter') verifyPassword();"
+            />
+          </div>
+          <button class="btn btn-primary" onclick="verifyPassword()">
+            دخول <i class="fas fa-sign-in-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-review">
+      <div class="review-container">
+        <button class="back-btn" onclick="goTo('page-home')">
+          <i class="fas fa-arrow-right"></i> رجوع
+        </button>
+        <div class="review-header">
+          <h2><i class="fas fa-praying-hands"></i> دعوات الأحباب</h2>
+          <div style="display: flex; gap: 8px">
+            <button class="btn btn-outline btn-sm" onclick="uncheckAll()">
+              <i class="fas fa-sync-alt"></i> إلغاء الكل
+            </button>
+            <button
+              class="btn btn-primary btn-sm"
+              id="saveProgressBtn"
+              onclick="saveProgress()"
+            >
+              <i class="fas fa-cloud-upload-alt"></i> حفظ التقدم
+            </button>
+          </div>
+        </div>
+        <div class="stats-bar" id="stats-bar"></div>
+        <div id="review-list"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      const APP_URL =
+        "https://script.google.com/macros/s/AKfycbwDHrksZ0kWsK0Dt6KyW5eEFaYW2W3gaiBoHg2XzXCRSHmX9DVO0mLeWbWiIUVEjVjl/exec";
+      let sessionPassword = "";
+      let currentData = [];
+
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2500);
+      }
+
+      function goTo(pageId) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById(pageId).classList.add("active");
+        if (pageId === "page-review") loadData();
+        if (pageId === "page-add") resetForm();
+      }
+
+      async function verifyPassword() {
+        const pw = document.getElementById("input-password").value.trim();
+        if (!pw) return showToast("ادخلي كلمة السر");
+        const res = await fetch(
+          APP_URL + "?password=" + encodeURIComponent(pw),
+        );
+        const json = await res.json();
+        if (json.success) {
+          sessionPassword = pw;
+          goTo("page-review");
+          showToast("تم الدخول ✅");
+        } else showToast("كلمة سر غلط ❌");
+      }
+
+      async function loadData() {
+        if (!sessionPassword) return goTo("page-password");
+        const res = await fetch(
+          APP_URL + "?password=" + encodeURIComponent(sessionPassword),
+        );
+        const json = await res.json();
+        if (json.success) {
+          let filtered = json.data.filter((item) => {
+            const name = String(item.name || "").trim();
+            const duaa = String(item.duaa || "").trim();
+            if (name === "الاسم" || duaa === "الدعوة") return false;
+            if (name === "name" || duaa === "duaa") return false;
+            if (name === "" || duaa === "") return false;
+            if (name === "تاريخ" || duaa === "دعوة") return false;
+            return true;
+          });
+          currentData = filtered;
+          currentData = filtered.sort(() => Math.random() - 0.5);
+          renderReview();
+        } else showToast("خطأ في التحميل");
+      }
+
+      function renderReview() {
+        const listDiv = document.getElementById("review-list");
+        const statsDiv = document.getElementById("stats-bar");
+        if (!currentData.length) {
+          listDiv.innerHTML =
+            "<div class='empty-state'>لا توجد دعوات بعد</div>";
+          statsDiv.innerHTML = "";
+          return;
+        }
+        const groups = {};
+        currentData.forEach((item) => {
+          if (!groups[item.name]) groups[item.name] = [];
+          groups[item.name].push(item);
+        });
+        const total = currentData.length;
+        const doneCount = currentData.filter((i) => i.done).length;
+        statsDiv.innerHTML = `<div class="stat-chip">👥 ${Object.keys(groups).length} شخص</div><div class="stat-chip">🤲 ${total} دعوة</div><div class="stat-chip">✅ ${doneCount} تم الدعاء</div>`;
+        let html = "";
+        for (const name in groups) {
+          html += `<div class="person-card"><div class="person-header"><i class="fas fa-user"></i> ${escapeHtml(name)}</div><div class="duaa-list">`;
+          groups[name].forEach((item) => {
+            const doneClass = item.done ? "done" : "";
+            const checkedClass = item.done ? "checked" : "";
+            html += `<div class="duaa-item ${doneClass}"><span class="duaa-text">${escapeHtml(item.duaa)}</span><button class="check-btn ${checkedClass}" onclick="toggleDone(${item.rowIndex})">${item.done ? "✓" : ""}</button></div>`;
+          });
+          html += `</div></div>`;
+        }
+        listDiv.innerHTML = html;
+      }
+
+      function toggleDone(rowIndex) {
+        rowIndex = Number(rowIndex);
+        const idx = currentData.findIndex(
+          (i) => Number(i.rowIndex) === rowIndex,
+        );
+        if (idx !== -1) currentData[idx].done = !currentData[idx].done;
+        renderReview();
+      }
+
+      function uncheckAll() {
+        if (
+          confirm("إلغاء كل العلامات؟ سيؤثر على الشاشة فقط حتى تحفظي التقدم")
+        ) {
+          currentData.forEach((i) => (i.done = false));
+          renderReview();
+        }
+      }
+
+      async function saveProgress() {
+        if (!sessionPassword) return showToast("كلمة السر مطلوبة");
+        const btn = document.getElementById("saveProgressBtn");
+        const original = btn.innerHTML;
+        btn.innerHTML = "<span class='loading-spinner'></span> جاري الحفظ...";
+        btn.disabled = true;
+        const progressObj = {};
+        currentData.forEach((item) => {
+          progressObj[item.rowIndex] = item.done;
+        });
+        try {
+          const res = await fetch(APP_URL, {
+            method: "POST",
+            body: JSON.stringify({
+              action: "updateProgress",
+              password: sessionPassword,
+              progress: progressObj,
+            }),
+          });
+          const json = await res.json();
+          if (json.success) showToast("تم حفظ التقدم ✅");
+          else showToast("فشل الحفظ ❌");
+        } catch (e) {
+          showToast("خطأ في الاتصال");
+        } finally {
+          btn.innerHTML = original;
+          btn.disabled = false;
+        }
+      }
+
+      function addRow() {
+        const container = document.getElementById("duaa-rows");
+        const div = document.createElement("div");
+        div.className = "duaa-row";
+        div.innerHTML =
+          '<textarea placeholder="اكتب دعوتك..."></textarea><button class="btn-remove" onclick="removeRow(this)"><i class="fas fa-trash"></i></button>';
+        container.appendChild(div);
+      }
+
+      function removeRow(btn) {
+        if (document.querySelectorAll(".duaa-row").length > 1)
+          btn.parentElement.remove();
+        else showToast("لازم دعوة واحدة على الأقل");
+      }
+
+      function resetForm() {
+        document.getElementById("input-name").value = "";
+        document.getElementById("duaa-rows").innerHTML =
+          '<div class="duaa-row"><textarea placeholder="اكتب دعوتك..."></textarea><button class="btn-remove" onclick="removeRow(this)"><i class="fas fa-trash"></i></button></div>';
+        // تأكد إن الزرار شغال من جديد لو الصفحة اتفتحت تاني
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-save"></i> حفظ الدعوات';
+      }
+
+      async function submitDuaa() {
+        const name = document.getElementById("input-name").value.trim();
+        if (!name) return showToast("اكتب اسمك ✍️");
+        const texts = [...document.querySelectorAll("#duaa-rows textarea")]
+          .map((t) => t.value.trim())
+          .filter(Boolean);
+        if (!texts.length) return showToast("اكتب دعوة على الأقل 🤲");
+
+        // ← هنا التعديل: loading state + disable + cursor انتظار
+        const submitBtn = document.getElementById("submitBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
+        const originalHtml = submitBtn.innerHTML;
+        submitBtn.innerHTML =
+          "<span class='loading-spinner'></span> جاري الحفظ...";
+        submitBtn.disabled = true;
+        cancelBtn.disabled = true;
+        document.body.style.cursor = "wait";
+
+        try {
+          const res = await fetch(APP_URL, {
+            method: "POST",
+            body: JSON.stringify({ action: "save", name, duaas: texts }),
+          });
+          const json = await res.json();
+          if (json.success) {
+            showToast("تم الحفظ ✅");
+            goTo("page-home");
+          } else {
+            showToast("فشل الحفظ ❌");
+          }
+        } catch (e) {
+          showToast("خطأ في الاتصال");
+        } finally {
+          submitBtn.innerHTML = originalHtml;
+          submitBtn.disabled = false;
+          cancelBtn.disabled = false;
+          document.body.style.cursor = "";
+        }
+      }
+
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>]/g, function (m) {
+          if (m === "&") return "&amp;";
+          if (m === "<") return "&lt;";
+          if (m === ">") return "&gt;";
+          return m;
+        });
+      }
+    </script>
+  </body>
+</html>
